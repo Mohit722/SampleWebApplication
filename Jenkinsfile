@@ -1,11 +1,11 @@
 pipeline{
     agent any
     stages{
-       // stage('Cloning repo'){
-         //   steps{
-           //     sh "git clone https://github.com/Mohit722/SampleWebApplication.git"
-            //}
-        //}
+        stage('Cloning repo'){
+            steps{
+                sh "git clone https://github.com/Mohit722/SampleWebApplication.git"
+            }
+        }
      stage('Build'){
             tools{
                maven 'M2'
@@ -27,4 +27,5 @@ pipeline{
         }
     }
     }
-}}
+}
+    }
