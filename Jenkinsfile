@@ -4,13 +4,12 @@ pipeline{
     
         stage('Pulling Code form repo') {
             steps {
-		git credentialsId: 'github-creds', branch: 'master',
 		url: 'https://github.com/Mohit722/SampleWebApplication.git'
-                dir ('SampleWebApplication'){
-                sh "pwd"
+                 branch: 'master'
+                
                }
             }
-        } 
+        
               stage('Build'){
                 steps{
                     dir ('SampleWebApplication'){
