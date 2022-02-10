@@ -1,26 +1,27 @@
 pipeline{
     agent any
-    stages {
-    
-        stage('Pulling Code form repo') {
-            steps {
-		url: 'https://github.com/Mohit722/SampleWebApplication.git'
-                 
-                
-               }
+	stages{
+        stage('Cloning repo'){
+            steps{
+                sh "https://github.com/Mohit722/SampleWebApplication.git"
             }
-        
-              stage('Build'){
-                steps{
-                    dir ('SampleWebApplication'){
-                        sh "./mvnw package"
-                    }
+        }
+   stage('Build'){
+            tools{
+               maven 'M2'
+            }
+            steps{
+                dir('SampleWebApplication'){
+                    sh "mvn clean package"
                 }
-            } 
+            }
+        }
+        
+             
 	  stage ('Test'){
 		  steps{
 			  dir('SampleWebApplication'){
-				  sh './mvnw test'
+				  sh "mvn clean test"
 			  }
 		  }
 		  post {
