@@ -11,8 +11,7 @@ pipeline{
                maven 'M2'
             }
             steps{
-                dir('SampleWebApplication
-'){
+                dir('SampleWebApplication'){
                     sh "mvn clean package"
                 }
             }
