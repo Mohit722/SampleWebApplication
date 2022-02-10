@@ -1,25 +1,36 @@
 pipeline{
     agent any
-    stages{
-        stage('Cloning repo'){
-            steps{
-                sh "git clone https://github.com/Mohit722/SampleWebApplication.git"
+    stages {
+    
+        stage('Pulling Code form repo') {
+            steps {
+		git credentialsId: 'github-creds', branch: 'master',
+		url: 'https://github.com/Mohit722/SampleWebApplication.git'
+                dir ('SampleWebApplication'){
+                sh "pwd"
+               }
             }
-        }
-     stage('Build'){
-            tools{
-               maven 'M2'
-            }
-            steps{
-                dir('SampleWebApplication'){
-                    sh "mvn clean package"
+        } 
+              stage('Build'){
+                steps{
+                    dir ('SampleWebApplication'){
+                        sh "./mvnw package"
+                    }
                 }
-            }
-       stage('unit test'){
-        steps{
-            junit 'SampleWebApplication/TestCalculator_JUnitResult.xml'
-        }
-        }
+            } 
+	  stage ('Test'){
+		  steps{
+			  dir('SampleWebApplication'){
+				  sh './mvnw test'
+			  }
+		  }
+		  post {
+			  always{
+				 junit 'SampleWebApplication/TestCalculator_JUnitResult.xml'
+
+			  }
+		  }
+	  }
         stage('Deploy to tomcat') {
             steps {
             dir('sparkjava-war-example'){
