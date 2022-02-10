@@ -3,7 +3,7 @@ pipeline{
 	stages{
         stage('Cloning repo'){
             steps{
-                sh "https://github.com/Mohit722/SampleWebApplication.git"
+                sh "https://github.com/Mohit722/spring-boot-demo1.git"
             }
         }
    stage('Build'){
@@ -11,7 +11,7 @@ pipeline{
                maven 'M2'
             }
             steps{
-                dir('SampleWebApplication'){
+                dir('spring-boot-demo1'){
                     sh "mvn clean package"
                 }
             }
@@ -20,20 +20,20 @@ pipeline{
              
 	  stage ('Test'){
 		  steps{
-			  dir('SampleWebApplication'){
+			  dir('spring-boot-demo1'){
 				  sh "mvn clean test"
 			  }
 		  }
 		  post {
 			  always{
-				 junit 'SampleWebApplication/TestCalculator_JUnitResult.xml'
+				 junit 'spring-boot-demo1/TestCalculator_JUnitResult.xml'
 
 			  }
 		  }
 	  }
         stage('Deploy to tomcat') {
             steps {
-            dir('sparkjava-war-example'){
+            dir('spring-boot-demo1'){
                deploy adapters: [tomcat9(credentialsId: 'tomcat' , path: '', url: 'http://ec2-15-207-115-111.ap-south-1.compute.amazonaws.com:8080')], contextPath: null, war: 'target/sparkjava-hello-world-1.0.war'
         }
     }
