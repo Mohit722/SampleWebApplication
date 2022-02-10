@@ -5,7 +5,7 @@ pipeline{
         stage('Pulling Code form repo') {
             steps {
 		url: 'https://github.com/Mohit722/SampleWebApplication.git'
-                 branch: 'master'
+                 
                 
                }
             }
